@@ -3,6 +3,7 @@ package com.chennyh.simpletimetable.security.service;
 import com.chennyh.simpletimetable.security.entity.JwtUser;
 import com.chennyh.simpletimetable.system.entity.User;
 import com.chennyh.simpletimetable.system.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    @Autowired
     private final UserService userService;
 
     public UserDetailsServiceImpl(UserService userService) {
