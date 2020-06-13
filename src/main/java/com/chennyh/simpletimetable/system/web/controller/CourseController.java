@@ -49,7 +49,7 @@ public class CourseController {
     @GetMapping("/{userId}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')")
     @ApiOperation(value = "查询用户课程", notes = "通过用户ID查询数据库中的课程信息")
-    public ResponseEntity<Page<CourseRepresentation>> getUserCourse(@PathVariable Long userId ,@RequestParam(value = "pageNum", defaultValue = "0") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ResponseEntity<Page<CourseRepresentation>> getUserCourse(@PathVariable Long userId, @RequestParam(value = "pageNum", defaultValue = "0") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         System.out.println("当前访问该接口的用户为：" + currentUserUtils.getCurrentUser().getUsername());
         Page<CourseRepresentation> allUser = courseService.getUser(userId, pageNum, pageSize);
         return ResponseEntity.ok().body(allUser);
