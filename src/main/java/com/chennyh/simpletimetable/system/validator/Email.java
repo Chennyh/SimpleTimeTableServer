@@ -10,11 +10,11 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = FullNameValidator.class)
+@Constraint(validatedBy = EmailValidator.class)
 @Target({PARAMETER, FIELD})
 @Retention(RUNTIME)
-public @interface FullName {
-    String message() default "姓名格式错误";
+public @interface Email {
+    String message() default "邮箱格式错误";
 
     Class[] groups() default {};
 

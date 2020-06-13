@@ -38,9 +38,9 @@ public class User extends AbstractAuditBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String userName;
+    private String username;
     @Column(nullable = false)
-    private String fullName;
+    private String email;
     @Column(nullable = false)
     private String password;
     @Column(columnDefinition = "tinyint(1) default 1")
@@ -58,19 +58,19 @@ public class User extends AbstractAuditBase {
     }
 
     public UserRepresentation toUserRepresentation() {
-        return UserRepresentation.builder().fullName(this.fullName)
-                .userName(this.userName).build();
+        return UserRepresentation.builder().email(this.email)
+                .username(this.username).build();
     }
 
     public static User of(UserRegisterRequest userRegisterRequest) {
-        return User.builder().fullName(userRegisterRequest.getFullName())
-                .userName(userRegisterRequest.getUserName())
+        return User.builder().email(userRegisterRequest.getEmail())
+                .username(userRegisterRequest.getUsername())
                 .enabled(true).build();
     }
 
     public void updateFrom(UserUpdateRequest userUpdateRequest) {
-        if (Objects.nonNull(userUpdateRequest.getFullName())) {
-            this.setFullName(userUpdateRequest.getFullName());
+        if (Objects.nonNull(userUpdateRequest.getEmail())) {
+            this.setEmail(userUpdateRequest.getEmail());
         }
         if (Objects.nonNull(userUpdateRequest.getPassword())) {
             this.setPassword(userUpdateRequest.getPassword());

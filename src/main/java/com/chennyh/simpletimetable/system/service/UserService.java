@@ -36,7 +36,7 @@ public class UserService {
 
     @Transactional(rollbackFor = Exception.class)
     public void save(UserRegisterRequest userRegisterRequest) {
-        checkUserNameNotExist(userRegisterRequest.getUserName());
+        checkUserNameNotExist(userRegisterRequest.getUsername());
         User user = User.of(userRegisterRequest);
         user.setPassword(bCryptPasswordEncoder.encode(userRegisterRequest.getPassword()));
         userRepository.save(user);
@@ -48,18 +48,17 @@ public class UserService {
     }
 
     public User find(String userName) {
-        return userRepository.findByUserName(userName).orElseThrow(() -> new ResourceNotFoundException(ImmutableMap.of(USERNAME, userName)));
+        return userRepository.findByUsername(userName).orElseThrow(() -> new ResourceNotFoundException(ImmutableMap.of(USERNAME, userName)));
     }
 
     public void update(UserUpdateRequest userUpdateRequest) {
-        User user = userRepository.findByUserName(userUpdateRequest.getUserName()).orElseThrow(() -> new ResourceNotFoundException(ImmutableMap.of(USERNAME, userUpdateRequest.getUserName())));
+        User user = userRepository.findByUsername(userUpdateRequest.getUsername()).orElseThrow(() -> new ResourceNotFoundException(ImmutableMap.of(USERNAME, userUpdateRequest.getUsername())));
         user.updateFrom(userUpdateRequest);
         userRepository.save(user);
     }
 
-
     public void delete(String userName) {
-        userRepository.deleteByUserName(userName);
+        userRepository.deleteByUsername(userName);
     }
 
     public Page<UserRepresentation> getAll(int pageNum, int pageSize) {
@@ -67,7 +66,7 @@ public class UserService {
     }
 
     private void checkUserNameNotExist(String userName) {
-        boolean exist = userRepository.findByUserName(userName).isPresent();
+        boolean exist = userRepository.findByUsername(userName).isPresent();
         if (exist) {
             throw new UserNameAlreadyExistException(ImmutableMap.of(USERNAME, userName));
         }

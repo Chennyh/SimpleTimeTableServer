@@ -26,7 +26,7 @@ public class JwtUser implements UserDetails {
      */
     public JwtUser(User user) {
         id = user.getId();
-        username = user.getUserName();
+        username = user.getUsername();
         password = user.getPassword();
         enabled = user.getEnabled() == null ? true : user.getEnabled();
         authorities = user.getRoles();

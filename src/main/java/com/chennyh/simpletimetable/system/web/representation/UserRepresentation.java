@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserRepresentation {
-    private String userName;
-    private String fullName;
+    private String username;
+    private String email;
 }

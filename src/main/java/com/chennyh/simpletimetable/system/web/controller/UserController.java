@@ -46,7 +46,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')")
     @ApiOperation(value = "获取所有用户列表", notes = "需要登录，否则会获取失败")
     public ResponseEntity<Page<UserRepresentation>> getAllUser(@RequestParam(value = "pageNum", defaultValue = "0") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        System.out.println("当前访问该接口的用户为：" + currentUserUtils.getCurrentUser().getUserName());
+        System.out.println("当前访问该接口的用户为：" + currentUserUtils.getCurrentUser().getUsername());
         Page<UserRepresentation> allUser = userService.getAll(pageNum, pageSize);
         return ResponseEntity.ok().body(allUser);
     }
@@ -61,7 +61,7 @@ public class UserController {
 
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @ApiOperation(value = "用户删除接口", notes = "通过用户名删除用户")
+    @ApiOperation(value = "删除用户接口", notes = "通过用户名删除用户，需要管理员权限")
     public ResponseEntity deleteUserByUserName(@RequestParam("username") String username) {
         userService.delete(username);
         return ResponseEntity.ok().build();

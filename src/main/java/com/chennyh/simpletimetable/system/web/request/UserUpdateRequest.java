@@ -15,8 +15,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UserUpdateRequest {
     @NotBlank
-    private String userName;
+    private String username;
     private String password;
-    private String fullName;
+    private String email;
     private Boolean enabled;
 }
