@@ -2,6 +2,7 @@ package com.chennyh.simpletimetable.system.service;
 
 import com.chennyh.simpletimetable.system.entity.Role;
 import com.chennyh.simpletimetable.system.entity.User;
+import com.chennyh.simpletimetable.system.exception.EmailAlreadyExistException;
 import com.chennyh.simpletimetable.system.exception.ResourceNotFoundException;
 import com.chennyh.simpletimetable.system.exception.UserNameAlreadyExistException;
 import com.chennyh.simpletimetable.system.repository.RoleRepository;
@@ -37,6 +38,7 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public void save(UserRegisterRequest userRegisterRequest) {
         checkUserNameNotExist(userRegisterRequest.getUsername());
+        checkEmailNotExist(userRegisterRequest.getEmail());
         User user = User.of(userRegisterRequest);
         user.setPassword(bCryptPasswordEncoder.encode(userRegisterRequest.getPassword()));
         userRepository.save(user);
@@ -69,6 +71,13 @@ public class UserService {
         boolean exist = userRepository.findByUsername(userName).isPresent();
         if (exist) {
             throw new UserNameAlreadyExistException(ImmutableMap.of(USERNAME, userName));
+        }
+    }
+
+    private void checkEmailNotExist(String email) {
+        boolean exist = userRepository.findByEmail(email).isPresent();
+        if (exist) {
+            throw new EmailAlreadyExistException(ImmutableMap.of("email", email));
         }
     }
 }

@@ -1,13 +1,20 @@
 package com.chennyh.simpletimetable.system.entity;
 
+import com.chennyh.simpletimetable.system.web.representation.CourseRepresentation;
 import com.chennyh.simpletimetable.system.web.request.CourseAddRequest;
+import com.chennyh.simpletimetable.system.web.request.CourseUpdateRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Chennyh
@@ -104,5 +111,58 @@ public class Course extends AbstractAuditBase {
                 .color(courseAddRequest.getColor())
                 .build();
 
+    }
+
+    public CourseRepresentation toCourseRepresentation() {
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<Integer>>() {}.getType();
+        ArrayList<Integer> weekList = gson.fromJson(this.getWeekList(), listType);
+
+        return CourseRepresentation.builder()
+                .id(this.getId())
+                .name(this.getName())
+                .time(this.getTime())
+                .room(this.getRoom())
+                .teacher(this.getTeacher())
+                .weekList(weekList)
+                .start(this.getStart())
+                .step(this.getStep())
+                .day(this.getDay())
+                .term(this.getTerm())
+                .color(this.getColor())
+                .build();
+    }
+
+    public void updateForm(CourseUpdateRequest courseUpdateRequest) {
+        if (Objects.nonNull(courseUpdateRequest.getName())) {
+            this.setName(courseUpdateRequest.getName());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getTime())) {
+            this.setTime(courseUpdateRequest.getTime());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getRoom())) {
+            this.setRoom(courseUpdateRequest.getRoom());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getTeacher())) {
+            this.setTeacher(courseUpdateRequest.getTeacher());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getWeekList())) {
+            this.setWeekList(courseUpdateRequest.getWeekList().toString());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getStart())) {
+            this.setStart(courseUpdateRequest.getStart());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getStep())) {
+            this.setStep(courseUpdateRequest.getStep());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getDay())) {
+            this.setDay(courseUpdateRequest.getDay());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getTerm())) {
+            this.setTerm(courseUpdateRequest.getTerm());
+        }
+        if (Objects.nonNull(courseUpdateRequest.getColor())) {
+            this.setColor(courseUpdateRequest.getColor());
+        }
     }
 }
