@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserRepresentation {
+    private Long id;
     private String username;
     private String email;
 }

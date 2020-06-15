@@ -2,12 +2,11 @@ package com.chennyh.simpletimetable.system.repository;
 
 import com.chennyh.simpletimetable.system.entity.Course;
 import com.chennyh.simpletimetable.system.entity.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -16,7 +15,7 @@ import java.util.Optional;
  */
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    Page<Course> findByUser(User user, Pageable page);
+    ArrayList<Course> findByUser(User user);
 
     Optional<Course> findById(Long id);
 

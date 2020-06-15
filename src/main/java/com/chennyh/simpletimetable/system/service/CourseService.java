@@ -18,6 +18,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @author Chennyh
  * @date 2020/6/12 15:31
@@ -41,9 +45,24 @@ public class CourseService {
         return courseRepository.findAll(PageRequest.of(pageNum, pageSize)).map(Course::toCourseRepresentation);
     }
 
-    public Page<CourseRepresentation> getUser(Long userId, int pageNum, int pageSize) {
+    public ArrayList<CourseRepresentation> getUser(Long userId, boolean today) {
+        ArrayList<CourseRepresentation> courseRepresentations = new ArrayList<>();
         User user = userRepository.findById(userId).orElseThrow(() -> new UserIdNotFoundException(ImmutableMap.of("userId", userId)));
-        return courseRepository.findByUser(user, PageRequest.of(pageNum, pageSize)).map(Course::toCourseRepresentation);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int currentWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+
+        ArrayList<Course> courses = courseRepository.findByUser(user);
+        for (Course course : courses) {
+            if (today) {
+                if (course.getDay() == currentWeek) {
+                    courseRepresentations.add(course.toCourseRepresentation());
+                }
+            } else {
+                courseRepresentations.add(course.toCourseRepresentation());
+            }
+        }
+        return courseRepresentations;
     }
 
     public void delete(Long courseId) {

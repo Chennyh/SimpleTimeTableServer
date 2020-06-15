@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -59,7 +60,8 @@ public class User extends AbstractAuditBase {
 
     public UserRepresentation toUserRepresentation() {
         return UserRepresentation.builder().email(this.email)
-                .username(this.username).build();
+                .username(this.username)
+                .id(this.id).build();
     }
 
     public static User of(UserRegisterRequest userRegisterRequest) {
@@ -73,7 +75,7 @@ public class User extends AbstractAuditBase {
             this.setEmail(userUpdateRequest.getEmail());
         }
         if (Objects.nonNull(userUpdateRequest.getPassword())) {
-            this.setPassword(userUpdateRequest.getPassword());
+            this.setPassword(new BCryptPasswordEncoder().encode(userUpdateRequest.getPassword()));
         }
         if (Objects.nonNull(userUpdateRequest.getEnabled())) {
             this.setEnabled(userUpdateRequest.getEnabled());
