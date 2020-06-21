@@ -43,7 +43,7 @@ public class SimpleTimetableApplication implements CommandLineRunner {
         //初始化一个 admin 用户
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         User user = User.builder().enabled(true).email("admin@qq.com").username("root").password(bCryptPasswordEncoder.encode("root")).build();
-        Course course = Course.builder().user(user).name("testCourse").teacher("teacher").room("13-201").term("2017-2018春").time("8:30").weekList("[1, 20]").day(1).start(1).step(2).build();
+        Course course = Course.builder().user(user).name("testCourse").teacher("teacher").room("13-201").term("2017-2018春").time("8:30 - 9:30").weekList("[1, 20]").day(1).start(1).step(2).build();
         userRepository.save(user);
         courseRepository.save(course);
         Role role = roleRepository.findByName(RoleType.ADMIN.getName()).get();

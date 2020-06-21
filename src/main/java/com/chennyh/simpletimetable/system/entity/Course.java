@@ -5,10 +5,7 @@ import com.chennyh.simpletimetable.system.web.request.CourseAddRequest;
 import com.chennyh.simpletimetable.system.web.request.CourseUpdateRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.lang.reflect.Type;
@@ -20,6 +17,7 @@ import java.util.Objects;
  * @author Chennyh
  * @date 2020/6/12 9:12
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

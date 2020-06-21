@@ -45,12 +45,12 @@ public class CourseService {
         return courseRepository.findAll(PageRequest.of(pageNum, pageSize)).map(Course::toCourseRepresentation);
     }
 
-    public ArrayList<CourseRepresentation> getUser(Long userId, boolean today) {
+    public ArrayList<CourseRepresentation> getCourse(Long userId, boolean today) {
         ArrayList<CourseRepresentation> courseRepresentations = new ArrayList<>();
         User user = userRepository.findById(userId).orElseThrow(() -> new UserIdNotFoundException(ImmutableMap.of("userId", userId)));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        int currentWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int currentWeek = Calendar.DAY_OF_WEEK;
 
         ArrayList<Course> courses = courseRepository.findByUser(user);
         for (Course course : courses) {

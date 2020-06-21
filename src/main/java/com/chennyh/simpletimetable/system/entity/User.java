@@ -4,10 +4,7 @@ import com.chennyh.simpletimetable.system.web.representation.UserRepresentation;
 import com.chennyh.simpletimetable.system.web.request.UserRegisterRequest;
 import com.chennyh.simpletimetable.system.web.request.UserUpdateRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -27,6 +24,7 @@ import java.util.stream.Collectors;
 /**
  * @author shuang.kou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -48,6 +46,7 @@ public class User extends AbstractAuditBase {
     private Boolean enabled;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<UserRole> userRoles = new ArrayList<>();
 

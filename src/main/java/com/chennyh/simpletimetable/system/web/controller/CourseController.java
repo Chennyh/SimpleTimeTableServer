@@ -53,7 +53,7 @@ public class CourseController {
     @ApiOperation(value = "查询用户课程", notes = "通过用户ID查询数据库中的课程信息")
     public ResponseEntity<ArrayList<CourseRepresentation>> getUserCourse(@PathVariable Long userId, @RequestParam(value = "today", defaultValue = "false") boolean today) {
         System.out.println("当前访问查询课程接口的用户为：" + currentUserUtils.getCurrentUser().getUsername());
-        ArrayList<CourseRepresentation> allUser = courseService.getUser(userId, today);
+        ArrayList<CourseRepresentation> allUser = courseService.getCourse(userId, today);
         return ResponseEntity.ok().body(allUser);
     }
 

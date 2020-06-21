@@ -27,7 +27,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    @Autowired
     private final CurrentUserUtils currentUserUtils;
 
     @PostMapping()
